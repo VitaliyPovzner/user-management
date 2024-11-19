@@ -1,7 +1,7 @@
 import { IsInt, IsOptional, IsPositive,Min } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-export class GetUsersQueryDto {
+export class PaginationOffsetDTO {
   @IsOptional() 
   @IsInt() 
   @IsPositive()

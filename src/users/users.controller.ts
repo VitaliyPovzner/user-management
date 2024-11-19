@@ -1,6 +1,7 @@
 import { Controller, Get, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { GetUsersQueryDto } from './get-users.dto';
+import { PaginationOffsetDTO } from 'src/common/pagination-offset.dto';
+
 
 
 @Controller('users')
@@ -8,7 +9,7 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Get()
-    async getAllUsers(@Query() query: GetUsersQueryDto) {
+    async getAllUsers(@Query() query: PaginationOffsetDTO) {
         try {
             const { limit, offset } = query;
             return await this.usersService.findAll(limit, offset);
