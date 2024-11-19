@@ -12,7 +12,11 @@ export class Group {
   @Column({ type: 'enum', enum: ['empty', 'notEmpty'], default: 'empty' })
   status: 'empty' | 'notEmpty';
 
-  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
   @ManyToMany(() => User, (user) => user.groups)

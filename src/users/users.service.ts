@@ -12,12 +12,13 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async findAll({offset = DEFAULT_PAGINATION_OPTIONS.offset, limit =DEFAULT_PAGINATION_OPTIONS.limit}: PaginationOffsetDTO): Promise<User[]> {
+  async findAll({
+    offset = DEFAULT_PAGINATION_OPTIONS.offset,
+    limit = DEFAULT_PAGINATION_OPTIONS.limit,
+  }: PaginationOffsetDTO): Promise<User[]> {
     return this.usersRepository.find({
       skip: offset,
       take: limit,
     });
   }
 }
-
-

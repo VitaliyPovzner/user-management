@@ -14,7 +14,7 @@ import { UserGroupController } from './user-groups/user-group.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, 
+      isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -26,15 +26,13 @@ import { UserGroupController } from './user-groups/user-group.controller';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [User, Group, UserGroup],
-        synchronize: false, 
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([User, Group, UserGroup]),
   ],
-  controllers: [GroupsController,UsersController,UserGroupController],
-  providers: [GroupsService,UsersService,UserGroupService],
+  controllers: [GroupsController, UsersController, UserGroupController],
+  providers: [GroupsService, UsersService, UserGroupService],
 })
-
-
 export class AppModule {}

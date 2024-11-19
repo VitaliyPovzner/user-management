@@ -12,8 +12,11 @@ export class UserGroupService {
 
     @InjectRepository(Group)
     private readonly groupRepository: Repository<Group>,
-  ) { }
-  async removeUserFromGroup(groupId: number, userId: number): Promise<{ message: string }> {
+  ) {}
+  async removeUserFromGroup(
+    groupId: number,
+    userId: number,
+  ): Promise<{ message: string }> {
     return await this.userGroupRepository.manager.transaction(
       async (entityManager: EntityManager) => {
         // Remove the user from the group
@@ -21,22 +24,19 @@ export class UserGroupService {
           .createQueryBuilder()
           .delete()
           .from(UserGroup)
-          .where('user_id = :userId AND group_id = :groupId', { userId, groupId })
+          .where({
+            user_id: userId,
+            group_id: groupId,
+          })
           .execute();
-          
+
         if (deleteResult.affected === 0) {
-          throw new NotFoundException(
-            `Nothing to delete`,
-          );
+          throw new NotFoundException(`Nothing to delete`);
         }
 
         // Check if the group has any remaining members
-        const result = await entityManager.query(
-          `SELECT COUNT(*) as count FROM user_groups WHERE group_id = ?`,
-          [groupId],
-        );
+        const count = await entityManager.count(UserGroup, { where: { group_id: groupId } });
 
-        const count = result[0]?.count || 0;
 
         // Determine the new group status
         const newStatus = count > 0 ? 'notEmpty' : 'empty';
@@ -44,7 +44,9 @@ export class UserGroupService {
         // Update the group status
         await entityManager.update(Group, groupId, { status: newStatus });
 
-        return { message: `User removed from group, group status updated to ${newStatus}` };
+        return {
+          message: `User removed from group, group status updated to ${newStatus}`,
+        };
       },
     );
   }

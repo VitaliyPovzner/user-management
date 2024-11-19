@@ -1,4 +1,11 @@
-import { Controller, Delete, Param, ParseIntPipe, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Param,
+  ParseIntPipe,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserGroupService } from './user-group.service';
 
 @Controller('user-groups')
