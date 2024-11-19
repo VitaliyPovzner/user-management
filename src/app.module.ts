@@ -7,6 +7,8 @@ import { GroupsController } from './groups/groups.controller';
 import { GroupsService } from './groups/groups.service';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
+import { UserGroupService } from './user-groups/user-group.service';
+import { UserGroupController } from './user-groups/user-group.controller';
 
 @Module({
   imports: [
@@ -22,8 +24,8 @@ import { UsersService } from './users/users.service';
     }),
     TypeOrmModule.forFeature([User, Group, UserGroup]),
   ],
-  controllers: [GroupsController,UsersController],
-  providers: [GroupsService,UsersService],
+  controllers: [GroupsController,UsersController,UserGroupController],
+  providers: [GroupsService,UsersService,UserGroupService],
 })
 
 
