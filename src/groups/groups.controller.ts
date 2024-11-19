@@ -7,8 +7,7 @@ export class GroupsController {
     @Get()
     async getAllGroups(@Query() query: PaginationOffsetDTO) {
         try {
-            const { limit, offset } = query;
-            return await this.groupsService.findAll(limit, offset);
+            return await this.groupsService.findAll(query);
         } catch (error) {
             if (error instanceof HttpException && error.getStatus() === HttpStatus.BAD_REQUEST) {
                 throw new HttpException({

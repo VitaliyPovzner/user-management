@@ -11,8 +11,7 @@ export class UsersController {
     @Get()
     async getAllUsers(@Query() query: PaginationOffsetDTO) {
         try {
-            const { limit, offset } = query;
-            return await this.usersService.findAll(limit, offset);
+            return await this.usersService.findAll(query);
         } catch (error) {
                 if (error instanceof HttpException && error.getStatus() === HttpStatus.BAD_REQUEST) {
                     throw new HttpException({
